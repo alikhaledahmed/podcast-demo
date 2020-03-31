@@ -172,12 +172,13 @@ export default class PlayerScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.state.playbackInstancePosition === 3501) {
+      this.state.isLoading = true;
        this.playbackInstance.pauseAsync();
        this._playAd();
        setTimeout(() => {
         this.playbackInstance.playAsync();
+        this.state.isLoading = false;
        }, 5000);
-       
    }
 }
 
@@ -187,6 +188,7 @@ async _playAd() {
  try {
    await soundObject.loadAsync(require('../../assets/sounds/hello.mp3'));
    await soundObject.playAsync();
+   console.log(soundObject.getStatusAsync());
  } catch (error) {
    // An error occurred!
  }
